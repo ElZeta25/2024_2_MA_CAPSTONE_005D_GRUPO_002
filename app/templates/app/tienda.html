@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/estilostienda.css' %}">
+{%endblock css%}
+
+<h1 style="color: azure;text-align: center; font-size: 100%;font-family: 'Open Sans', sans-serif; padding-top: 1%;">
+  Disfrute de nuestros productos disponibles en nuestra tienda, consulte stock por telefono, para revisión de divisas
+  usar conversor.</h1>
+<div class="galeria">
+  {% for p in productos %}
+  
+  <div class="card" style="width: 18rem; background-color: #346895;">
+    <img class="card-img-top rounded" src="{{p.imagen.url}}" alt="Card image cap">
+    <div class="card-body justify-content-center align-items-center text-center">
+      <h5 class="card-title">{{p.nombre}}</h5>
+      <p class="card-text" style="color: black;">{{p.descripcion}}</p>
+      <p class="card-text"style="color:black">${{p.precio}}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock contenido %}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  {% load static %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  {% block css %}
+  <link rel="stylesheet" href="{% static 'app/css/estilos.css' %}">
+  {% endblock %}
+  <meta charset="utf-8">
+  <title>Lukas Pet</title>
+  <link rel="icon" type="image/png"
+    href="{%static 'app/img/Lukaspet-ico.ico'%}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="{% static 'app/css/estilos.css' %}">
+  <link rel="stylesheet" href="{% static 'app/css/estilosapi.css' %}">
+  <link rel="stylesheet" href="{% static 'app/css/estilosC.css' %}">
+  <link rel="stylesheet" href="{% static 'app/css/estilostienda.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"> </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+    integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+    integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="color-background">
+    <nav class="navbar navbar-expand-lg px-3">
+      <img src="{%static 'app/img/Lukaspet-ico.ico'%}" width="50" height="50" alt="">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-dark navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li>
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'home'%}">Inicio</a>
+          </li>
+          <li class="nav-item active">
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'sobrenosotros'%}">Sobre Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'galeria'%}">Galeria</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'contacto'%}">Contactanos</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'tienda'%}">Tienda</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'agregar_producto'%}">Agregar productos</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'listar_producto'%}">Listar productos</a>
+          </li>
+          {%if user.is_authenticated %} 
+          <li>
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'logout'%}">Cerrar Sesión</a>
+          </li>
+          <li>
+            <a a style="color: aliceblue;" class="nav-link" href="{#}">{{user.username}}</a>
+          </li>
+          {% else %}
+          <li>
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'login'%}">Iniciar Sesión</a>
+          </li>
+          
+          <li>
+            <a style="color: aliceblue;" class="nav-link" href="{%url 'registro'%}">Registrate</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    {% block contenido %}
+
+    {% endblock %}
+
+    <footer class="pie-pagina">
+      <div class="grupo-1">
+        <div class="box">
+          <figure>
+            <a href="{%url 'home'%}">
+              <img src="{%static 'app/img/Lukaspet-ico.ico'%}" alt=""href="{%url 'home'%}"
+                height="250px">
+            </a>
+          </figure>
+        </div>
+        <div class="box">
+          <h2>SOBRE NOSOTROS</h2>
+          <p>Lukas Pet. Lo mejor para tu mascota.</p>
+          <p>Tu tienda de mascotas. <br><br> Llámanos: <br>+56966727428
+            <br><br>Encuentranos:<br>Av. Esq.
+            Blanca 501, Maipú, Región Metropolitana
+          </p>
+        </div>
+          <!-- Mapa dentro del footer -->
+  <div class="footer-map">
+    <h3>Ubicación Mapa</h3>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d831.4692677595453!2d-70.77427647143523!3d-33.53058159832791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662dd187e9f6045%3A0x69d57f282c8f251f!2sLukas%20pet!5e0!3m2!1ses-419!2scl!4v1726086636309!5m2!1ses-419!2scl" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+        <div class="box">
+          <h2>SIGUENOS</h2>
+          <div class="red-social">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="fa fa-facebook"></a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="fa fa-instagram"></a>
+            <a href="https://twitter.com/home" target="_blank" rel="noopener noreferrer" class="fa fa-twitter"></a>
+            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="fa fa-youtube"></a>
+          </div>
+        </div>
+      </div>
+      <div class="grupo-2">
+        <small>&copy; 2024 <b>Lukas Pet</b> - Todos los Derechos Reservados </small>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/estilosC.css' %}">
+{%endblock css%}
+
+
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<h1 style="text-align: center; color: aliceblue;" > ¡Déjanos tus datos y te contactaremos en breve! </h1>
+<div class row style="color:aliceblue">
+    
+</div>
+<form action="" class="formulario" id="formulario_contacto">
+    
+
+    {{ form}}
+
+
+    <input type="submit" class="formulario__submit">
+</form>
+{{mensaje}}
+<script src="{% static 'app/js/form.js'%}"></script>      
+<br> <br>
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{%extends 'app/base.html'%}
+
+{% block contenido %}
+
+<div class="card" style="background-color:#0a141d;max-width: 120%; padding: 0px;text-align: justify;border: 1ch;"> 
+    <div class="row">
+    <div class="card-body" style="color: aliceblue;max-width: 100%;">
+   
+        <div class="col-0 col-md-0 offset-md-0">
+            <center>
+                <h2>Modificar Producto</h2>
+            </center>
+            
+            <div class="row">
+                <div class="card-body">
+        
+            <form action="" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                {{form}}
+                <div class="d-flex justify-content-center">
+
+                <input type="reset" value="Cancelar" class="btn btn-secondary">
+                    &nbsp;
+                <input type="submit" value="Editar" class="btn btn-primary"> 
+            </form>
+        </div>
+    </div>
+</div>
+<br><br><br><br>    
+{%endblock%}

@@ -1,0 +1,42 @@
+{%extends 'app/base.html'%}
+
+{% block contenido %}
+
+{% load humanize %}
+<center>
+    <table cellspacing="10">
+        <tr>
+            <tr>
+                <td style="color:aliceblue">Nombre</td></th>
+                <td style="color:aliceblue">Precio</td></th>
+                <td style="color:aliceblue">Marca</td></th>
+                <td style="color:aliceblue">Opciones</td></th>
+
+        </tr>
+        {% for p in productos %}
+        <tr>
+            <td style="color:aliceblue" margin="10"> {{p.nombre}}</td>
+            <td style="color:aliceblue"> {{p.marca}}</td>
+            <td style="color:aliceblue"> ${{p.precio}}</td>
+            <td>
+                <a href="{% url 'modificar_producto' p.id %}" class="btn btn-infa-flip-horizontal btn-sm" style="color: blue;">Modificar</a>
+                <a href="{% url 'eliminar_producto' p.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</center>
+<br><br><br><br><br><br><br><br><br><br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+{%endblock%}
