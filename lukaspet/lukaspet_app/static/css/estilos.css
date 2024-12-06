@@ -1,0 +1,144 @@
+/* Importación de fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --primary-color: #0d2033;
+    --secondary-color: #0a141d;
+    --text-light: #ffffff;
+    --text-gray: #efefef;
+    --hover-color: #1a3b66;
+    --background-color: #f0f5ff; /* Nuevo color de fondo azul claro */
+}
+
+body {
+    background-color: var(--background-color); /* Cambiado de text-light a background-color */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--primary-color) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--text-light);
+    transition: color 0.3s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--text-gray);
+}
+
+.btn-primary {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* Galería */
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.galeria img {
+    max-width: 500px;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.galeria img:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+.pie-pagina {
+    margin-top: auto;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.pie-pagina .grupo-1 {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 3rem 1rem;
+}
+
+.pie-pagina .box figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-pagina .box figure img {
+    width: 250px;
+}
+
+.pie-pagina .box h2 {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.pie-pagina .box p {
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.pie-pagina .red-social a {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: var(--text-light);
+    margin-right: 0.5rem;
+    background-color: var(--secondary-color);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.pie-pagina .red-social a:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-3px);
+}
+
+.pie-pagina .grupo-2 {
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Responsive */
+@media screen and (max-width: 992px) {
+    .pie-pagina .grupo-1 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .pie-pagina .grupo-1 {
+        grid-template-columns: 1fr;
+    }
+}

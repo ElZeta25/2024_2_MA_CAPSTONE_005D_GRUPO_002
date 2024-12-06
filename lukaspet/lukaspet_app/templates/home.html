@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio - Lukas Pet{% endblock %}
+
+{% block contenido %}
+<section class="hero-section">
+  <div class="carousel-container position-relative">
+    <div id="mainCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" 
+                data-bs-target="#mainCarousel" 
+                data-bs-slide-to="0" 
+                class="active"
+                aria-current="true"
+                aria-label="Slide 1"
+                style="width: 12px; height: 12px; border-radius: 50%; background-color: rgba(0,0,0,0.7);"></button>
+        <button type="button" 
+                data-bs-target="#mainCarousel" 
+                data-bs-slide-to="1" 
+                aria-label="Slide 2"
+                style="width: 12px; height: 12px; border-radius: 50%; background-color: rgba(0,0,0,0.7);"></button>
+        <button type="button" 
+                data-bs-target="#mainCarousel" 
+                data-bs-slide-to="2" 
+                aria-label="Slide 3"
+                style="width: 12px; height: 12px; border-radius: 50%; background-color: rgba(0,0,0,0.7);"></button>
+        <button type="button" 
+                data-bs-target="#mainCarousel" 
+                data-bs-slide-to="3" 
+                aria-label="Slide 4"
+                style="width: 12px; height: 12px; border-radius: 50%; background-color: rgba(0,0,0,0.7);"></button>
+        <button type="button" 
+                data-bs-target="#mainCarousel" 
+                data-bs-slide-to="4" 
+                aria-label="Slide 5"
+                style="width: 12px; height: 12px; border-radius: 50%; background-color: rgba(0,0,0,0.7);"></button>
+        <button type="button" 
+                data-bs-target="#mainCarousel" 
+                data-bs-slide-to="5" 
+                aria-label="Slide 6"
+                style="width: 12px; height: 12px; border-radius: 50%; background-color: rgba(0,0,0,0.7);"></button>
+      </div>
+
+      <div class="carousel-inner rounded-3 shadow-lg">
+        <div class="carousel-item active">
+          <img src="{% static 'img/Local.jpeg' %}" 
+               class="d-block w-100 object-fit-cover" 
+               alt="Local Lukas Pet"
+               style="height: 70vh;">
+          <div class="carousel-caption d-none d-md-block">
+            <h2 class="display-4 fw-bold text-white text-shadow">Bienvenidos a Lukas Pet</h2>
+            <p class="lead text-white text-shadow">Tu tienda de mascotas de confianza</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="{% static 'img/Alimento_humedo.jpeg' %}" 
+               class="d-block w-100 object-fit-cover" 
+               alt="Alimento Húmedo"
+               style="height: 70vh;">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/Alimentos.jpeg' %}" 
+               class="d-block w-100 object-fit-cover" 
+               alt="Alimentos"
+               style="height: 70vh;">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/Vestuario.jpeg' %}" 
+               class="d-block w-100 object-fit-cover" 
+               alt="Vestuario"
+               style="height: 70vh;">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/Perfumes.jpeg' %}" 
+               class="d-block w-100 object-fit-cover" 
+               alt="Perfumes"
+               style="height: 70vh;">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/Foto1.jpeg' %}" 
+               class="d-block w-100 object-fit-cover" 
+               alt="Foto"
+               style="height: 70vh;">
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark bg-opacity-50 rounded-circle p-3" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark bg-opacity-50 rounded-circle p-3" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="about-section py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="display-4 fw-bold mb-4">¿Quiénes somos?</h2>
+        <p class="lead text-muted mb-4">
+          "Somos LukasPet, una tienda especializada en productos y servicios para mascotas, dedicada a satisfacer las necesidades de los amantes de los animales. Nuestro compromiso es ofrecer una experiencia de compra única, combinando tecnología e innovación para facilitar el acceso a productos de alta calidad y soluciones personalizadas para el bienestar de las mascotas."
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="position-relative hover-scale">
+          <img src="{% static 'img/Local.jpeg' %}" 
+               class="img-fluid rounded-4 shadow-sm" 
+               alt="Local Lukas Pet">
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-5">
+        <div class="position-relative hover-scale">
+          <img src="{% static 'img/Local2.jpeg' %}" 
+               class="img-fluid rounded-4 shadow-sm" 
+               alt="Local Lukas Pet">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .hover-scale {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+  
+  .carousel-item img {
+    object-position: center;
+  }
+  
+  .carousel-indicators button {
+    margin: 0 6px !important;
+  }
+  
+  @media (max-width: 768px) {
+    .carousel-inner img {
+      height: 50vh !important;
+    }
+  }
+</style>
+{% endblock %}
