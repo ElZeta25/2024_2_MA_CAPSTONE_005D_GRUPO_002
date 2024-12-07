@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmación de Compra{% endblock %}
+
+{% block contenido %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if response.response_code == 0 %}
+                <div class="card shadow-lg">
+                    <div class="card-header bg-success text-white text-center">
+                        <h2 class="mb-0">
+                            <i class="fas fa-check-circle me-2"></i>Compra Confirmada
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-light" role="alert">
+                            <h4 class="alert-heading">Gracias por tu compra, {{ user.first_name }}!</h4>
+                            <p class="mb-0">Tu pedido ha sido procesado con éxito.</p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2">Detalles del Pedido</h5>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <strong>Número de Seguimiento:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ pedido.numero_seguimiento}}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <strong>Fecha de Compra:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ carrito.fecha_creacion|date:"d/m/Y H:i" }}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <strong>Dirección:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ direccion }}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <strong>Comuna:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ comuna }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2">Productos Comprados</h5>
+                            <div class="list-group">
+                                {% for item in carrito.items.all %}
+                                    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="my-0">{{ item.producto.nombre }}</h6>
+                                            <small class="text-muted">{{ item.producto.marca.nombre }}</small>
+                                        </div>
+                                        <div class="text-end">
+                                            <span>{{ item.cantidad }} x ${{ item.producto.precio }}</span>
+                                            <div class="text-muted small">Subtotal: ${{ item.subtotal  }}</div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Total de la Compra:</strong>
+                                    <h4 class="text-success">${{ carrito.total  }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{% url 'tienda' %}" class="btn btn-primary">
+                            <i class="fas fa-shopping-cart me-2"></i>Continuar Comprando
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary ms-2">
+                            <i class="fas fa-file-invoice me-2"></i>Descargar Comprobante
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card shadow-lg border-danger">
+                    <div class="card-header bg-danger text-white text-center">
+                        <h2 class="mb-0">
+                            <i class="fas fa-times-circle me-2"></i>Pago No Completado
+                        </h2>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="alert alert-danger">
+                            <h4 class="alert-heading">Ups! Algo salió mal</h4>
+                            <p>No se pudo procesar tu pago. Por favor, intenta nuevamente.</p>
+                        </div>
+                        <div class="mt-4">
+                            <a href="{% url 'ver_carrito' %}" class="btn btn-danger">
+                                <i class="fas fa-shopping-cart me-2"></i>Volver al Carrito
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

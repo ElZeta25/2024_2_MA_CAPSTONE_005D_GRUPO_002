@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Sobre Nosotros - Lukas Pet{% endblock %}
+
+
+{% block contenido %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/estilos.css' %}">
+<style>
+    body {
+        background-color: #15192c;
+        color: #ffffff; 
+    }
+</style>
+
+{% endblock %}
+
+<div class="container my-5">
+    <div class="p-5 bg-gradient-primary text-white rounded shadow-lg">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-uppercase">¿Nuestra Misión?</h1>
+            <p class="lead fst-italic">Brindar soluciones innovadoras y accesibles para los amantes de las mascotas, facilitando la adquisición de productos especializados mediante una plataforma de e-commerce intuitiva, confiable y segura. Buscamos mejorar la calidad de vida de las mascotas y sus dueños, ofreciendo un servicio excepcional y productos de alta calidad.</p>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2 class="text-info text-uppercase fw-bold">¿Nuestra Visión?</h2>
+                <p>Ser la plataforma líder en e-commerce para el cuidado de mascotas en Latinoamérica, reconocida por su compromiso con la innovación, sostenibilidad y bienestar animal. Aspiramos a transformar la manera en que los dueños de mascotas acceden a productos y servicios, promoviendo una comunidad global donde el amor y el respeto por los animales sean el centro de cada interacción.</p>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-warning text-uppercase fw-bold">Nuestro Objetivo</h2>
+                <p>Facilitar el acceso a productos y servicios especializados para el cuidado de las mascotas, a través de una plataforma de e-commerce que ofrezca una experiencia de compra eficiente, personalizada y segura. Buscamos satisfacer las necesidades de los dueños de mascotas mediante la oferta de productos de alta calidad, con un enfoque en la innovación y la excelencia en el servicio, fomentando así el bienestar animal y la fidelización de nuestros clientes.</p>
+            </div>
+        </div>
+
+        <h2 class="text-center text-success my-4 fw-bold text-uppercase">Servicios Disponibles</h2>
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="card bg-light shadow-sm h-100 border-0 hover-service">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Alimento</h5>
+                        <p class="card-text">Variedad de marcas y tipos de alimento para tus mascotas.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card bg-light shadow-sm h-100 border-0 hover-service">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Correas</h5>
+                        <p class="card-text">Las mejores correas y arneses para la protección de tus amigos peludos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card bg-light shadow-sm h-100 border-0 hover-service">
+                    <div class="card-body">
+
+                        <h5 class="card-title fw-bold">Juguetes</h5>
+                        <p class="card-text">Variedad de juguetes para la entretencion de los gatos y perros.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card bg-light shadow-sm h-100 border-0 hover-service">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Capas</h5>
+                        <p class="card-text">Las capas de mejor calidad para el frio y la lluvia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

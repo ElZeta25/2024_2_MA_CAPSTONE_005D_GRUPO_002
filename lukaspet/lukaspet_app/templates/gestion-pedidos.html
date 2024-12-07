@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Gestión de Pedidos{% endblock %}
+
+{% block contenido %}
+<div class="container py-5">
+    <h1 class="mb-4">Gestión de Pedidos</h1>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th># Pedido</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos %}
+            <tr>
+                <td>{{ pedido.id }}</td>
+                <td>{{ pedido.usuario.username }}</td>
+                <td>{{ pedido.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                <td>${{ pedido.total }}</td>
+                <td>
+                    <span class="badge 
+                        {% if pedido.estado == 'pendiente' %} bg-warning 
+                        {% elif pedido.estado == 'procesando' %} bg-info 
+                        {% elif pedido.estado == 'enviado' %} bg-primary 
+                        {% elif pedido.estado == 'entregado' %} bg-success 
+                        {% elif pedido.estado == 'cancelado' %} bg-danger 
+                        {% endif %}
+                    ">
+                        {{ pedido.get_estado_display }}
+                    </span>
+                </td>
+                <td>
+                    <form method="post" class="d-flex">
+                        {% csrf_token %}
+                        <input type="hidden" name="pedido_id" value="{{ pedido.id }}">
+                        <select name="nuevo_estado" class="form-select me-2" required>
+                            {% for estado, nombre_estado in pedido.ESTADO_CHOICES %}
+                            <option value="{{ estado }}" {% if pedido.estado == estado %}selected{% endif %}>
+                                {{ nombre_estado }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Actualizar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

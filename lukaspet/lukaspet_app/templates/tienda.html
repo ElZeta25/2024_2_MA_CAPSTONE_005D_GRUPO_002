@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tienda - Lukas Pet{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-5">
+    <!-- Filters Section -->
+    <div class="row mb-4">
+        <div class="col-lg-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Filtros</h5>
+                    <form method="GET" action="{% url 'tienda' %}">
+                        <!-- Search -->
+                        <div class="mb-3">
+                            <label class="form-label">Buscar</label>
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="Nombre o SKU..." value="{{ request.GET.q }}">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Categories -->
+                        <div class="mb-3">
+                            <label class="form-label">Categorías</label>
+                            <select name="categoria" class="form-select" onchange="this.form.submit()">
+                                <option value="">Todas las categorías</option>
+                                {% for categoria in categorias %}
+                                <option value="{{ categoria.id }}" {% if request.GET.categoria|add:0 == categoria.id %}selected{% endif %}>
+                                    {{ categoria.nombre }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Brands -->
+                        <div class="mb-3">
+                            <label class="form-label">Marcas</label>
+                            <select name="marca" class="form-select" onchange="this.form.submit()">
+                                <option value="">Todas las marcas</option>
+                                {% for marca in marcas %}
+                                <option value="{{ marca.id }}" {% if request.GET.marca|add:0 == marca.id %}selected{% endif %}>
+                                    {{ marca.nombre }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Sort -->
+                        <div class="mb-3">
+                            <label class="form-label">Ordenar por</label>
+                            <select name="orden" class="form-select" onchange="this.form.submit()">
+                                <option value="nombre" {% if request.GET.orden == 'nombre' %}selected{% endif %}>Nombre (A-Z)</option>
+                                <option value="-nombre" {% if request.GET.orden == '-nombre' %}selected{% endif %}>Nombre (Z-A)</option>
+                                <option value="precio" {% if request.GET.orden == 'precio' %}selected{% endif %}>Precio (Menor a Mayor)</option>
+                                <option value="-precio" {% if request.GET.orden == '-precio' %}selected{% endif %}>Precio (Mayor a Menor)</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Nuestros Productos</h2>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                {% for producto in productos %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm product-card">
+                        <!-- Product Image with Hover Zoom -->
+                        <div class="product-image-container">
+                            {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" class="card-img-top product-image" alt="{{ producto.nombre }}">
+                            {% else %}
+                            <img src="{% static 'img/no-image.png' %}" class="card-img-top product-image" alt="No imagen disponible">
+                            {% endif %}
+                            
+                            {% if producto.stock <= 0 %}
+                            <div class="stock-badge">
+                                <span class="badge bg-danger">Agotado</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <!-- Category & Brand -->
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-primary">{{ producto.categoria }}</span>
+                                <span class="badge bg-secondary">{{ producto.marca }}</span>
+                            </div>
+
+                            <!-- Product Name -->
+                            <h5 class="card-title product-title">{{ producto.nombre }}</h5>
+
+                            <!-- Price -->
+                            <div class="mt-auto">
+                                <h4 class="text-primary mb-3">{{ producto.precio_formato_clp }}</h4>
+
+                                <!-- Action Buttons -->
+                                <div class="d-grid gap-2">
+                                    <button type="button" class="btn btn-outline-secondary" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#productoModal{{ producto.id }}">
+                                        <i class="fas fa-eye me-2"></i>Ver Detalles
+                                    </button>
+                                    {% if producto.stock > 0 %}
+                                    <form action="{% url 'agregar_al_carrito' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                                        <input type="hidden" name="cantidad" value="1">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                        </button>
+                                    </form>
+                                    {% else %}
+                                    <button class="btn btn-secondary" disabled>
+                                        <i class="fas fa-times me-2"></i>No Disponible
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stock Info -->
+                        <div class="card-footer bg-transparent">
+                            <small class="text-muted">
+                                SKU: {{ producto.sku|default:"No disponible" }}
+                                {% if producto.stock > 0 %}
+                                <span class="float-end">Stock: {{ producto.stock }}</span>
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Product Modal -->
+                    <div class="modal fade" id="productoModal{{ producto.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ producto.nombre }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {% if producto.imagen %}
+                                            <img src="{{ producto.imagen.url }}" class="img-fluid rounded" alt="{{ producto.nombre }}">
+                                            {% else %}
+                                            <img src="{% static 'img/no-image.png' %}" class="img-fluid rounded" alt="No imagen disponible">
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="text-primary mb-3">{{ producto.precio_formato_clp }}</h4>
+                                            <p class="mb-3">{{ producto.descripcion }}</p>
+                                            <ul class="list-unstyled">
+                                                <li><strong>Categoría:</strong> {{ producto.categoria }}</li>
+                                                <li><strong>Marca:</strong> {{ producto.marca }}</li>
+                                                <li><strong>SKU:</strong> {{ producto.sku|default:"No disponible" }}</li>
+                                                <li><strong>Stock:</strong> {{ producto.stock }} unidades</li>
+                                            </ul>
+                                            {% if producto.stock > 0 %}
+                                            <form action="{% url 'agregar_al_carrito' %}" method="POST" class="d-grid">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                                                <input type="hidden" name="cantidad" value="1">
+                                                <button type="submit" class="btn btn-primary btn-lg">
+                                                    <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                                </button>
+                                            </form>
+                                            {% else %}
+                                            <div class="alert alert-danger">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>Producto agotado
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>No hay productos disponibles
+                        <p class="mb-0 mt-2">Intenta con otros filtros o vuelve más tarde.</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                            {{ num }}
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.product-card {
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.product-image-container {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.1);
+}
+
+.stock-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
+
+.product-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.5rem;
+}
+
+.add-to-cart {
+    transition: all 0.2s ease;
+}
+
+.add-to-cart:hover {
+    transform: scale(1.02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .filters-section {
+        margin-bottom: 2rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Añadir al carrito
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            // Aquí puedes implementar la lógica para añadir al carrito
+            // Por ejemplo, usando fetch para hacer una petición AJAX
+            alert('Producto añadido al carrito (ID: ' + productId + ')');
+        });
+    });
+});
+</script>
+{% endblock %}
